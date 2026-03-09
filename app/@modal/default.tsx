@@ -3,9 +3,12 @@ import { ReactNode } from "react";
 
 interface ModalProps {
   children: ReactNode;
+  isOpen: boolean;
 }
 
-export default function Modal({ children }: ModalProps) {
+export default function Modal({ children, isOpen }: ModalProps) {
+  if (!isOpen) return null; 
+  
   return (
     <div
       style={{

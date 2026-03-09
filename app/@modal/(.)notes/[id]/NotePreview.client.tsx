@@ -18,14 +18,14 @@ export default function NotePreviewModal({ params }: NotePreviewModalProps) {
   const { data: note, isLoading, isError } = useQuery<Note>({
     queryKey: ["note", params.id],
     queryFn: () => fetchNoteById(params.id),
+    refetchOnMount: false,
   });
 
   const handleClose = () => router.back();
 
   return (
-    <Modal>
+    <Modal isOpen={true}>
       <div style={{ position: "relative" }}>
-        {/* Кнопка закриття */}
         <button
           onClick={handleClose}
           style={{

@@ -7,7 +7,7 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 import { createNote } from '../../lib/api';
 import type {NoteTag} from '../../types/note';
 
-interface NoteFormProps { closeModal: () => void; }
+interface NoteFormProps { noteId:string; closeModal: () => void; }
 
 interface FormValues { title: string, content: string, tag: NoteTag; }
 
@@ -16,6 +16,7 @@ const validationSchema = Yup.object({
     content: Yup.string().max(500, 'Maximum 500 characters'),
     tag: Yup.string().oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping']).required('Tag is required'),
 });
+
 
 export default function NoteForm({closeModal}: NoteFormProps){
     const queryClient = useQueryClient();

@@ -3,13 +3,13 @@ import { ReactNode } from "react";
 
 interface LayoutProps {
   children: ReactNode;
-  siderbar: ReactNode;
+  sidebar: ReactNode;
 }
 
-export default function FilterLayout({ children, siderbar }: LayoutProps) {
+export default function FilterLayout({ children, sidebar }: LayoutProps) {
   return (
     <div style={{ display: "flex" }}>
-      <aside style={{width: 250}}>{siderbar}</aside>
+      <aside style={{width: 250}}>{sidebar}</aside>
       <main style={{ flex: 1 }}>{children}</main>
     </div>
   );
