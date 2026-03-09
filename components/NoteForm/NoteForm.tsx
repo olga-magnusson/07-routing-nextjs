@@ -7,7 +7,7 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 import { createNote } from '../../lib/api';
 import type {NoteTag} from '../../types/note';
 
-interface NoteFormProps { noteId:string; closeModal: () => void; }
+interface NoteFormProps { noteId?:string; closeModal: () => void; }
 
 interface FormValues { title: string, content: string, tag: NoteTag; }
 

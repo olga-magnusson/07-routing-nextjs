@@ -3,14 +3,16 @@ import { ReactNode } from "react";
 
 interface ModalProps {
   children: ReactNode;
+  onClose: ()=> void;
   isOpen: boolean;
 }
 
-export default function Modal({ children, isOpen }: ModalProps) {
+export default function Modal({ children, isOpen, onClose }: ModalProps) {
   if (!isOpen) return null; 
   
   return (
     <div
+      onClick={onClose}
       style={{
         position: "fixed",
         top: 0,
@@ -24,7 +26,9 @@ export default function Modal({ children, isOpen }: ModalProps) {
         zIndex: 1000,
       }}
     >
-      <div style={{ background: "#fff", padding: 20, borderRadius: 8, maxWidth: "90%", maxHeight: "90%", overflow: "auto" }}>
+      <div 
+      onClick={(e) => e.stopPropagation()}
+      style={{ background: "#fff", padding: 20, borderRadius: 8, maxWidth: "90%", maxHeight: "90%", overflow: "auto" }}>
         {children}
       </div>
     </div>

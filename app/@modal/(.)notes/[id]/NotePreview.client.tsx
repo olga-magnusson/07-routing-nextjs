@@ -24,7 +24,7 @@ export default function NotePreviewModal({ params }: NotePreviewModalProps) {
   const handleClose = () => router.back();
 
   return (
-    <Modal isOpen={true}>
+    <Modal isOpen={true} onClose={handleClose}>
       <div style={{ position: "relative" }}>
         <button
           onClick={handleClose}
@@ -44,7 +44,7 @@ export default function NotePreviewModal({ params }: NotePreviewModalProps) {
 
         {isError && <p>Error loading note.</p>}
 
-        {note && <NotePreview note={note} />}
+        {note && <NotePreview noteId={params.id} />}
       </div>
     </Modal>
   );
