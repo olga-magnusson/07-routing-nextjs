@@ -2,27 +2,50 @@
 
 import { useRouter } from "next/navigation";
 import NotePreview from "@/components/NotePreview/NotePreview";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
 import { Note } from "@/types/note";
+import Modal from "../../default";
 
-interface Props {
+interface NotePreviewModalProps {
   params: { id: string };
 }
 
-export default function NotePreviewModal({ params }: Props) {
-  const [note, setNote] = useState<Note | null>(null);
+export default function NotePreviewModal({ params }: NotePreviewModalProps) {
+
   const router = useRouter();
 
-  useEffect(() => {
-    fetchNoteById(params.id).then((fetchedNote) => setNote(fetchedNote));
-  }, [params.id]);
+  const { data: note, isLoading, isError } = useQuery<Note>({
+    queryKey: ["note", params.id],
+    queryFn: () => fetchNoteById(params.id),
+  });
 
-  if (!note) return <p>Loading note...</p>;
+  const handleClose = () => router.back();
 
   return (
-    <div onClick={() => router.back()}>
-      <NotePreview note={note} />
-    </div>
+    <Modal>
+      <div style={{ position: "relative" }}>
+        {/* Кнопка закриття */}
+        <button
+          onClick={handleClose}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            background: "transparent",
+            border: "none",
+            fontSize: 24,
+            cursor: "pointer",
+          }}
+        >
+          ×
+        </button>
+        {isLoading && <p>Loading note...</p>}
+
+        {isError && <p>Error loading note.</p>}
+
+        {note && <NotePreview note={note} />}
+      </div>
+    </Modal>
   );
 }

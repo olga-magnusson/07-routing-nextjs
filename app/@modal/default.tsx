@@ -21,7 +21,7 @@ export default function Modal({ children }: ModalProps) {
         zIndex: 1000,
       }}
     >
-      <div style={{ background: "#fff", padding: 20, borderRadius: 8 }}>
+      <div style={{ background: "#fff", padding: 20, borderRadius: 8, maxWidth: "90%", maxHeight: "90%", overflow: "auto" }}>
         {children}
       </div>
     </div>

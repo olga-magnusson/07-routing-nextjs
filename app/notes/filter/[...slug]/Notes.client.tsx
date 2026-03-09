@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { fetchNotes } from "@/lib/api";
-import { Note } from "@/types/note";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNotes, FetchNotesResponse } from "@/lib/api";
 import NotePreview from "@/components/NotePreview/NotePreview";
 
-export default function NotesClient() {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const pathname = usePathname();
-  const slug = pathname.split("/").pop() || "all";
+interface NoteClientProps {
+  initialNotes: FetchNotesResponse;
+  tag: string;
+}
 
-  useEffect(() => {
-    const tag = slug === "all" ? "" : slug;
-    fetchNotes(1, 100, tag).then((res) => setNotes(res.notes));
-  }, [slug]);
+export default function NotesClient({initialNotes, tag}: NoteClientProps) {
+  const { data } = useQuery({
+    queryKey: ["notes", 1, tag],
+    queryFn: () => fetchNotes(1, 12, tag === "all" ? "" : tag),
+    initialData: initialNotes, // <--- використовуємо initialNotes
+  });
 
   return (
     <div>
-      {notes.map((note) => (
+      {data?.notes.map((note) => (
         <NotePreview key={note.id} note={note} />
       ))}
     </div>

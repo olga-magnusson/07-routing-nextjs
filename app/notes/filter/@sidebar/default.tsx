@@ -1,6 +1,12 @@
 import css from "./default.module.css";
 
-const tags = ["Work", "Personal", "Important"]; // список тегів
+const tags = [
+  { value: "Todo", label: "To Do" },
+  { value: "Work", label: "Work" },
+  { value: "Personal", label: "Personal" },
+  { value: "Meeting", label: "Meetings" },
+  { value: "Shopping", label: "Shopping List" },
+];
 
 export default function SidebarNotes() {
   return (
@@ -10,10 +16,10 @@ export default function SidebarNotes() {
           All notes
         </a>
       </li>
-      {tags.map((tag) => (
-        <li key={tag} className={css.menuItem}>
-          <a href={`/notes/filter/${tag}`} className={css.menuLink}>
-            {tag}
+      {tags.map(({value, label}) => (
+        <li key={value} className={css.menuItem}>
+          <a href={`/notes/filter/${value}`} className={css.menuLink}>
+            {label}
           </a>
         </li>
       ))}
